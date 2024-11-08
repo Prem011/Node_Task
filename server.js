@@ -2,8 +2,7 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
 const exphbs = require('express-handlebars');
-const knexIns
-tance = require('./config/db');
+const knexInstance = require('./config/db');
 const adminRoutes = require('./routes/adminRoutes');
 const indexRoutes = require('./routes/index');
 const bodyParser = require('body-parser');

@@ -6,6 +6,10 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const taskController = require('../controllers/taskController');
 
+router.get('/', (req, res) => {
+    res.render('index');
+});
+
 router.get('/users/new', userController.renderUserForm);
 
 router.post('/users/add', userController.addUser);
