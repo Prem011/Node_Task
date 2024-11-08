@@ -1,0 +1,20 @@
+<!-- views/addTask.hbs -->
+<form action="/tasks" method="POST">
+    <label for="user_id">User</label>
+    <select name="user_id" id="user_id">
+        {{#each users}}
+        <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="task_name">Task Name</label>
+    <input type="text" name="task_name" id="task_name" required />
+
+    <label for="task_type">Task Type</label>
+    <select name="task_type" id="task_type">
+        <option value="Pending">Pending</option>
+        <option value="Done">Done</option>
+    </select>
+
+    <button type="submit">Add Task</button>
+</form>
