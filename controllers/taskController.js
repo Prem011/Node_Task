@@ -71,7 +71,6 @@ const renderEditTaskForm = async (req, res) => {
         res.render('./tasks/editTaskStatus', { task, users });
     } catch (error) {
         console.error("Error fetching task:", error);
-        res.status(500).send("Error fetching task.");
     }
 };
 

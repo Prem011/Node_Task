@@ -1,0 +1,46 @@
+<div class="w-100 h-[100vh] bg-zinc-600 flex flex-col justify-center items-center">
+    <form class="px-10 py-8 rounded-md border border-spacing-3 bg-zinc-700 text-white" action="/user/assignTask" method="POST">
+        <h2 class="text-center text-xl py-4">Assign New Task to User</h2>
+
+        {{#if users}}
+        <!-- User Selection Dropdown -->
+        <label class="block mb-3">
+            <span class="text-sm">User</span>
+            <select name="user_id" id="user_id" class="w-full p-2 rounded-lg bg-zinc-600 text-white outline-none" required>
+                <!-- Loop through each user and add them as options -->
+                {{!-- {{#each users}} --}}
+                    <option value="{{userId}}">Id:{{userId}} | {{user_name.name}}</option>
+                {{!-- {{/each}} --}}
+            </select>
+        </label>
+        {{else}}
+
+        <p class="text-center text-red-500">No users are available to assign tasks.</p>
+        {{/if}}
+
+        <label class="block mb-3">
+            <span class="text-sm">Task Name</span>
+            <input type="text" name="task_name" id="task_name" class="w-full p-2 rounded-lg bg-zinc-600 text-white outline-none" required />
+        </label>
+
+        <label class="block mb-5">
+            <span class="text-sm">Task Type</span>
+            <select name="task_type" id="task_type" class="w-full p-2 rounded-lg bg-zinc-600 text-white outline-none" required>
+                <option value="Pending">Pending</option>
+                <option value="Done">Done</option>
+            </select>
+        </label>
+
+        <div class="flex justify-center">
+            <button type="submit" class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
+                Assign Task 
+            </button>
+        </div>
+
+        <!-- Back Button -->
+
+    </form>
+        <button onclick="window.history.back()" class="text-white font-bold border border-white rounded-lg px-4 py-2 mt-6 hover:scale-110 hover:text-black transition transform">
+            <img class="w-6 h-6" src="https://img.icons8.com/?size=100&id=26194&format=png&color=ffffff" alt="Back">
+        </button>
+</div>
