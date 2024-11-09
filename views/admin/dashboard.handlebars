@@ -1,0 +1,68 @@
+<header class="w-100 h-[10vh] bg-zinc-700" >
+
+   <div class="flex justify-between items-center" >
+
+        <div class="w-[5%] flex flex-col justify-center items-center p-2  " >
+        <img src="https://img.icons8.com/?size=65&id=112355&format=png&color=ffffff" alt="">
+        <h1 class="ml-[35%] text-white w-[140%]">User's-Task</h1>
+        </div>
+        
+      <div class="absolute right-0 w-[10%] flex gap-2 justify-center items-center  p-2">
+        <a
+            class="text-white font-bold border bg-red-500 rounded-lg px-4 py-2 hover:bg-white hover:text-black transition"
+            href="/logout"
+        >
+            Logout
+        </a>
+       
+        </div>
+
+   </div>
+
+</header>
+
+
+<div class="w-100 h-[90vh] bg-zinc-600 flex justify-center items-center  ">
+
+        <form class='px-10 py-8  rounded-md border border-spacing-3'>
+            <h1 class='text-green-500 text-2xl text-center'>
+                <span class='text-3xl'>Task</span> <span>Management</span> System
+            </h1>
+            <h2 class='text-center text-xl py-4'>Admin's Login</h2>
+
+            <label class="input input-bordered flex items-center gap-2 mt-5 mb-1">
+                <input
+                    type="text"
+                    class="grow text-white bg-zinc-700 rounded-lg p-2 outline-none"
+                    placeholder="Username"
+                />
+            </label>
+            <br />
+
+            <label class="input input-bordered flex items-center gap-2 mb-1">
+                <input
+                    type="password"
+                    class="grow text-white bg-zinc-700 rounded-lg p-2 outline-none"
+                    placeholder="Password"
+                />
+            </label>
+            <br />
+
+            <div class='flex justify-center items-center gap-5'>
+                <a
+                    class="text-white "
+                    href="/register"
+                >
+                    Doesn't have an account?
+                </a>
+                <button
+                    type="submit"
+                    class='w-20 h-10 text-white rounded-md bg-blue-600 hover:bg-blue-800 border-0 p-2'
+                >
+                    Login
+                </button>
+            </div>
+        </form>
+    
+
+</div>
