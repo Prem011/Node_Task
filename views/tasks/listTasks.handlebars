@@ -16,36 +16,30 @@
 
 <div class="w-full">
     <div class="w-full h-[90vh] bg-zinc-800">
-        <div class="flex flex-col px-10 py-4">
+        <div class="flex flex-col px-[2%] py-4">
             <h1 class="text-3xl text-center text-white">All tasks</h1>
-            <a href="/task/addtask" class="px-4 w-[5.15%] py-2 bg-green-500 text-white rounded-md">Add task</a>
+            <a href="/task/addtask" class="px-4 w-[6%] py-2 bg-green-500 text-white rounded-md">Add task</a>
         </div>
 
         <div class="px-10 py-4">
-            {{#if employees.length}}
+            {{#if tasks.length}}
                 <table class="table-auto w-full bg-white rounded-md">
                     <thead>
                         <tr class="bg-gray-700 text-white">
                             <th class="px-4 py-2">Unique ID</th>
-                            <th class="px-4 py-2">Name</th>
+                            <th class="px-4 py-2">User Name</th>
                             <th class="px-4 py-2">Email</th>
                             <th class="px-4 py-2">Mobile No</th>
-                            <th class="px-4 py-2">Designation</th>
-                            <th class="px-4 py-2">Gender</th>
-                            <th class="px-4 py-2">Course</th>
                             <th class="px-4 py-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each employees}}
+                        {{#each tasks}}
                             <tr class="bg-gray-100">
-                                <td class="border px-4 py-2 text-center">{{this.eId}}</td>
-                                <td class="border px-4 py-2 text-center">{{this.name}}</td>
-                                <td class="border px-4 py-2 text-center">{{this.email}}</td>
-                                <td class="border px-4 py-2 text-center">{{this.mobile}}</td>
-                                <td class="border px-4 py-2 text-center">{{this.designation}}</td>
-                                <td class="border px-4 py-2 text-center">{{this.gender}}</td>
-                                <td class="border px-4 py-2 text-center">{{join this.course ', '}}</td>
+                                <td class="border px-4 py-2 text-center">{{this.id}}</td>
+                                <td class="border px-4 py-2 text-center">{{this.user.name}}</td>
+                                <td class="border px-4 py-2 text-center">{{this.user.email}}</td>
+                                <td class="border px-4 py-2 text-center">{{this.user.mobile}}</td>
                                 <td class="border py-2">
                                     <div class="flex justify-center">
                                         <a href="#" class="text-blue-500 mx-1">Edit</a>

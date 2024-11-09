@@ -2,19 +2,19 @@ const { Model } = require('objection');
 
 class Task extends Model {
     static get tableName() {
-        return 'tasks'; 
+        return 'task'; // Ensure this is the actual table name
     }
 
     static get relationMappings() {
-        const User = require('./User');  
+        const User = require('./User'); // Adjust path if necessary
 
         return {
             user: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: User,
                 join: {
-                    from: 'tasks.user_id',  
-                    to: 'users.id'  
+                    from: 'task.user_id',  // Changed 'tasks' to 'task'
+                    to: 'user.id'         // Assuming 'users' is the correct table name
                 }
             }
         };

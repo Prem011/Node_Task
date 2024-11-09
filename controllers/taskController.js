@@ -6,12 +6,31 @@ const ExcelJS = require('exceljs');
 const renderTaskForm = async (req, res) => {
     try {
         const users = await User.query().select('id', 'name');
-        res.render('taskForm', { users });
-    } catch (error) {
+       
+        // console.log(users)
+        
+        if (users.length === 0) {
+            return res.render('./users/addTask', { users: null, message: "No users are available to assign tasks." });
+        }
+
+        res.render('./tasks/addTask', { users });
+    } catch (error) 
+    {
         console.error("Error fetching users:", error);
         res.status(500).send("Error fetching users.");
     }
 };
+
+const getAllTasks = async (req, res) => {
+    try {
+        const tasks = await Task.query().withGraphFetched('user'); // Fetch associated user for each task
+        res.render("./tasks/listTasks", { tasks });
+    } catch (err) {
+        console.error("Error fetching tasks:", err);
+        res.status(500).send("Error fetching tasks.");
+    }
+};
+
 
 const addTask = async (req, res) => {
     const { user_id, task_name, task_type } = req.body;
@@ -67,6 +86,7 @@ const fetchUserTasks = async (req, res) => {
 };
 
 module.exports = {
+    getAllTasks,
     renderTaskForm,
     addTask,
     exportToExcel,

@@ -34,6 +34,14 @@ app.use(passport.session());
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const hbs = exphbs.create({
+    helpers: {
+        join: function (array, separator) {
+            return array.join(separator);
+        }
+    }
+});
+
 app.engine(
     'handlebars',
     exphbs.engine({

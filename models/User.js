@@ -35,6 +35,19 @@ class User extends Model {
         };
     }
 
+    static async checkUnique(email, mobile) {
+        const userWithEmail = await User.query().findOne({ email });
+        if (userWithEmail) {
+            throw new Error('Email already exists');
+    }
+    
+    const userWithMobile = await User.query().findOne({ mobile });
+    if (userWithMobile) {
+        throw new Error('Mobile number already exists');
+    }
+    
+}
+
 }
 
 module.exports = User;

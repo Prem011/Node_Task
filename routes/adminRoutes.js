@@ -11,22 +11,56 @@ router.post('/register', AdminController.register);
 
 // router.post('/login', passport.authenticate('local'), AdminController.login);
 
+// router.post('/login', (req, res, next) => {
+//   console.log('Entered Email:', req.body.email);
+//   console.log('Entered Password:', req.body.password);
+
+//   passport.authenticate('local', (err, user, info) => {
+//     if (err) {
+//       console.error('Error during authentication:', err);
+//       return next(err);
+//     }
+//     if (!user) {
+//       console.warn('Authentication failed:', info.message);
+//       return res.status(400).json({ message: info.message });
+//     }
+
+//     req.login(user, (err) => {
+//       if (err) {
+//         console.error('Error during login:', err);
+//         return next(err);
+//       }
+//       console.log('User authenticated successfully');
+//       return res.status(200).json({ message: 'Login successful', user });
+//     });
+//   })(req, res, next);
+// });
+
+
 router.post('/login', (req, res, next) => {
-    passport.authenticate('local', (err, user, info) => {
+  const { password } = req.body;
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(400).json({ message: info.message });
+    }
+
+    // Add a log for debugging
+    console.log('Entered Password:', password);
+    console.log('Stored Hashed Password:', user.password); // Make sure this hash is correct
+
+    req.login(user, (err) => {
       if (err) {
         return next(err);
       }
-      if (!user) {
-        return res.status(400).json({ message: info.message }); // Return error message
-      }
-      req.login(user, (err) => {
-        if (err) {
-          return next(err);
-        }
-        return res.status(200).json({ message: 'Login successful', user }); // Send success response
-      });
-    })(req, res, next);
-  });
+      return res.status(200).json({ message: 'Login successful', user });
+    });
+  })(req, res, next);
+});
+
+
   
 
 router.get('/dashboard', AdminController.dashboard)
