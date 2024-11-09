@@ -1,10 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const ExcelJS = require('exceljs');
-
-// Models
 const User = require('../models/User'); // Assuming "User" model
 const Task = require('../models/Task'); // Assuming "Task" model
+
+router.get('/alltasks',async function (req, res){
+    try {
+        // const tasks = await Task.query().select('*'); // Fetch all tasks
+        res.render('./tasks/listTasks');
+    } catch (error) {
+        // console.error("Error fetching tasks:", error);
+        // res.status(500).send("Error fetching tasks.");
+    }
+})
+
+router.get("/addtask", async function (req, res){
+    res.render('./tasks/addTask'); // Form to create new task
+})
 
 // Routes for User Management
 router.get('/users/new', (req, res) => {

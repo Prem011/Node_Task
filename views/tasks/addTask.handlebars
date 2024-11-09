@@ -1,20 +1,38 @@
-<!-- views/addTask.hbs -->
-<form action="/tasks" method="POST">
-    <label for="user_id">User</label>
-    <select name="user_id" id="user_id">
-        {{#each users}}
-        <option value="{{this.id}}">{{this.name}}</option>
-        {{/each}}
-    </select>
 
-    <label for="task_name">Task Name</label>
-    <input type="text" name="task_name" id="task_name" required />
+<div class="w-100 h-[100vh] bg-zinc-600 flex justify-center items-center">
+    <form class="px-10 py-8 rounded-md border border-spacing-3 bg-zinc-700 text-white" action="/tasks" method="POST">
+        <h2 class="text-center text-xl py-4">Add New Task</h2>
 
-    <label for="task_type">Task Type</label>
-    <select name="task_type" id="task_type">
-        <option value="Pending">Pending</option>
-        <option value="Done">Done</option>
-    </select>
+        <label class="block mb-3">
+            <span class="text-sm">User</span>
+            <select name="user_id" id="user_id" class="w-full p-2 rounded-lg bg-zinc-600 text-white outline-none">
+                {{#each users}}
+                <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+        </label>
 
-    <button type="submit">Add Task</button>
-</form>
+        <label class="block mb-3">
+            <span class="text-sm">Task Name</span>
+            <input type="text" name="task_name" id="task_name" class="w-full p-2 rounded-lg bg-zinc-600 text-white outline-none" required />
+        </label>
+
+        <label class="block mb-5">
+            <span class="text-sm">Task Type</span>
+            <select name="task_type" id="task_type" class="w-full p-2 rounded-lg bg-zinc-600 text-white outline-none">
+                <option value="Pending">Pending</option>
+                <option value="Done">Done</option>
+            </select>
+        </label>
+
+        <div class="flex justify-center">
+            <button type="submit" class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
+                Add Task
+            </button>
+        </div>
+        <button onclick="window.history.back()" class="text-white font-bold border border-white rounded-lg px-4 py-2 mt-6 hover:scale-110 hover:text-black transition transform">
+            <img class="w-6 h-6" src="https://img.icons8.com/?size=100&id=26194&format=png&color=ffffff" alt="Back">
+        </button>
+
+    </form>
+</div>

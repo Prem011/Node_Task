@@ -1,0 +1,67 @@
+<header class="w-100 h-[10vh] bg-zinc-700">
+    <div class="flex justify-between items-center px-2">
+        <div class="w-[5%] flex flex-col justify-center items-center px-2">
+            <img src="https://img.icons8.com/?size=65&id=112355&format=png&color=ffffff" alt="">
+            <h1 class="ml-[35%] text-white w-[140%]">User's-Task</h1>
+        </div>
+        <div class="absolute right-0 w-[10%] flex justify-center items-center p-2">
+            <a class="text-white font-bold border bg-red-500 rounded-lg px-4 py-2 hover:bg-white hover:text-black transition" href="/logout">Logout</a>
+        </div>
+    </div>
+</header>
+
+<div class="w-100">
+    <div class='w-full h-[90vh] bg-zinc-800'>
+        <div class="flex flex-col  justify-between px-10 py-4">
+            <h1 class="text-center text-3xl text-white">All users</h1>
+            <div>
+                <a href="/user/addUser" class='px-4 py-2 bg-green-500 text-white rounded-md'>Add User</a>
+            </div>
+        </div>
+
+        <div class='px-10 py-4'>
+            {{#if employees.length}}
+                <table class='table-auto w-full bg-white rounded-md'>
+                    <thead>
+                        <tr class='bg-gray-700 text-white'>
+                            <th class='px-4 py-2'>Unique ID</th>
+                            <th class='px-4 py-2'>Name</th>
+                            <th class='px-4 py-2'>Email</th>
+                            <th class='px-4 py-2'>Mobile No</th>
+                            <th class='px-4 py-2'>Designation</th>
+                            <th class='px-4 py-2'>Gender</th>
+                            <th class='px-4 py-2'>Course</th>
+                            <th class='px-4 py-2'>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each employees}}
+                            <tr class='bg-gray-100'>
+                                <td class='border px-4 py-2 text-center'>{{this.eId}}</td>
+                                <td class='border px-4 py-2 text-center'>{{this.name}}</td>
+                                <td class='border px-4 py-2 text-center'>{{this.email}}</td>
+                                <td class='border px-4 py-2 text-center'>{{this.mobile}}</td>
+                                <td class='border px-4 py-2 text-center'>{{this.designation}}</td>
+                                <td class='border px-4 py-2 text-center'>{{this.gender}}</td>
+                                <td class='border px-4 py-2 text-center'>{{join this.course ', '}}</td>
+                                <td class='border py-2'>
+                                    <div class='flex justify-center'>
+                                        <a href="" class="text-blue-500 mx-1">Edit</a>
+                                        &nbsp;|&nbsp;
+                                        <a href="" class="text-blue-500 mx-1">Payroll</a>
+                                        &nbsp;|&nbsp;
+                                        <a href="" class="text-blue-500 mx-1">Attendance</a>
+                                        &nbsp;|&nbsp;
+                                        <a href="" class="text-red-500">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <p class="text-white">No Users found. Please add a new user.</p>
+            {{/if}}
+        </div>
+    </div>
+</div>

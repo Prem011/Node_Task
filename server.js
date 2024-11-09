@@ -22,11 +22,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
     session({
-        secret: 'your-secret-key',
+        secret: process.env.SECRET,
         resave: false,
         saveUninitialized: false
     })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -35,7 +38,8 @@ app.engine(
     'handlebars',
     exphbs.engine({
         defaultLayout: 'main',
-        layoutsDir: path.join(__dirname, 'views', 'layouts')
+        layoutsDir: path.join(__dirname, 'views', 'layouts'),
+        partialsDir: path.join(__dirname, "views/partials") 
     })
 );
 app.set('view engine', 'handlebars');

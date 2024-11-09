@@ -31,7 +31,7 @@ const register = async (req, res) => {
         });
 
         // Render success message with the registration view
-        res.render('./admin', { message: 'Admin registered successfully!' });
+        res.render('./admin/', { message: 'Admin registered successfully!' });
     } catch (error) {
         console.error('Error registering admin:', error);
         res.render('./admin/register', { message: 'Error registering admin.' });
@@ -39,16 +39,18 @@ const register = async (req, res) => {
 };
 
 const getLogin = (req, res) => {
-    res.render('./admin/index', {user});
+    res.render('./admin/index', {});
 }
 
 const login = (req, res) => {
     if (req.isAuthenticated()) {
         // If the user is authenticated, redirect to the admin dashboard or home page
-        return res.redirect('./admin/dashboard');
+        // return res.redirect('./');
+        alert("Logged in successfully!");
     } else {
         // Render the login view if not authenticated
-        res.render('./admin/index', { message: 'Please log in.' });
+        // res.render('./', { message: 'Please log in.' });
+        alert("problem logging")
     }
 };
 

@@ -29,7 +29,7 @@
 
 <div class="w-100 h-[90vh] bg-zinc-600 flex justify-center items-center  ">
 
-        <form class='px-10 py-8  rounded-md border border-spacing-3'>
+        <form class='px-10 py-8  rounded-md border border-spacing-3' action="/login" method="post"  >
             <h1 class='text-green-500 text-2xl text-center'>
                 <span class='text-3xl'>Task</span> <span>Management</span> System
             </h1>
@@ -38,8 +38,9 @@
             <label class="input input-bordered flex items-center gap-2 mt-5 mb-1">
                 <input
                     type="text"
+                    name="email"
                     class="grow text-white bg-zinc-700 rounded-lg p-2 outline-none"
-                    placeholder="Username"
+                    placeholder="Email address"
                 />
             </label>
             <br />
@@ -47,6 +48,7 @@
             <label class="input input-bordered flex items-center gap-2 mb-1">
                 <input
                     type="password"
+                    name="password"
                     class="grow text-white bg-zinc-700 rounded-lg p-2 outline-none"
                     placeholder="Password"
                 />
