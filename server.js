@@ -11,6 +11,7 @@ const app = express();
 const session = require('express-session');
 const passport = require('passport');
 require('./config/passport');
+const Handlebars = require('handlebars');
 
 // db
 const db = require('./config/db.js');
@@ -28,6 +29,14 @@ app.use(
     })
 );
 
+// Register the custom helper
+Handlebars.registerHelper('ifEquals', function(a, b, options) {
+    if (a == b) {
+        return options.fn(this);
+    }
+    return options.inverse(this);
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -41,6 +50,7 @@ const hbs = exphbs.create({
         }
     }
 });
+
 
 app.engine(
     'handlebars',

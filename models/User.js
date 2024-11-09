@@ -10,11 +10,18 @@ class User extends Model {
 
         return {
             tasks: {
-                relation: Model.HasManyRelation,
+                // relation: Model.HasManyRelation, //`HasOneRelation` if each user has a single task
+                relation: Model.BelongsToOneRelation,
                 modelClass: Task,
+                
+                // join: {
+                //     from: 'users.id',                  // The primary key in the 'users' table
+                //     to: 'tasks.user_id'                // The foreign key in the 'tasks' table
+                // }
+
                 join: {
-                    from: 'users.id',
-                    to: 'tasks.user_id'
+                    from: 'users.task_id',
+                    to: 'tasks.id'
                 }
             }
         };
