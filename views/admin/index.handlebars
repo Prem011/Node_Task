@@ -1,30 +1,5 @@
-<header class="w-100 h-[10vh] bg-zinc-700" >
+{{> header}}
 
-   <div class="flex justify-between items-center" >
-
-        <div class="w-[5%] flex flex-col justify-center items-center p-2  " >
-        <img src="https://img.icons8.com/?size=65&id=112355&format=png&color=ffffff" alt="">
-        <h1 class="ml-[35%] text-white w-[140%]">User's-Task</h1>
-        </div>
-        
-      <div class="absolute right-0 w-[10%] flex gap-2 justify-center items-center  p-2 mr-[1%]">
-        <a
-            class="text-white font-bold border border-white rounded-lg px-4 py-2 hover:bg-white hover:text-black transition"
-            href="/register"
-        >
-            Register
-        </a>
-        <a
-            class="text-white font-bold border border-white rounded-lg px-4 py-2 hover:bg-white hover:text-black transition"
-            href="/"
-        >
-            Login
-        </a>
-        </div>
-
-   </div>
-
-</header>
 
 
 <div class="w-100 h-[90vh] bg-zinc-600 flex justify-center items-center  ">
@@ -34,6 +9,11 @@
                 <span class='text-3xl'>Task</span> <span>Management</span> System
             </h1>
             <h2 class='text-center text-xl py-4'>Admin's Login</h2>
+
+                {{#if message}}
+                    <p class="text-red-500">{{message}}</p>
+                {{/if}}
+                
 
             <label class="input input-bordered flex items-center gap-2 mt-5 mb-1">
                 <input
@@ -68,6 +48,8 @@
                 >
                     Login
                 </button>
+                
+
             </div>
         </form>
     

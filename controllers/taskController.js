@@ -29,7 +29,7 @@ const getAllTasks = async (req, res) => {
             .modifyGraph('user', builder => {
                 builder.select('id', 'name', 'email', 'mobile'); // Select only needed user fields
             });
-        res.render("./tasks/listTasks", { tasks });
+        res.render("./tasks/listTasks", { tasks, user: req.user  });
     } catch (err) {
         console.error("Error fetching tasks:", err);
         res.status(500).send("Error fetching tasks.");

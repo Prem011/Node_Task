@@ -4,15 +4,19 @@
 <div class="w-full">
     <div class="w-full h-[90vh] bg-zinc-800">
         <div class="flex flex-col px-[2%] py-4">
-            <h1 class="text-3xl text-center text-white">All tasks</h1>
-            <button 
-                onclick="window.history.back()" 
-                class="text-white w-[3.5%] font-bold border border-white rounded-lg px-4 py-2 mb-3 hover:scale-110 hover:text-black transition transform"
+            <h1 class="text-3xl text-center text-white">All tasks of <span class="font-bold text-4xl" >{{username}}</span></h1>
+            <a href="./user/listUsers"
+                class="text-white w-[3.8%] font-bold border border-white rounded-lg px-4 py-2 mb-3 hover:scale-110 hover:text-black transition transform"
             >
                 <img class="w-6 h-6" src="https://img.icons8.com/?size=100&id=26194&format=png&color=ffffff" alt="Back">
-            </button>
+            </a>
             <div class="flex justify-between" >
-                <a href="/task/addtask" class="px-4 py-2 bg-green-500 text-white rounded-md">Add task</a>
+                
+                <div class="flex items-center">
+                    <p class="text-white">Pending tasks: <span class="font-bold">{{pendingCount}}</span></p>
+                    <p class="ml-4 text-white">Done tasks: <span class="font-bold">{{doneCount}}</span></p>
+                </div>
+
                 <div class="flex gap-5" >
                     <a href="/task/export/excel" class="px-4  py-2 bg-blue-500 text-white rounded-md">Export to Excel</a>
                     <a href="/user/listUsers" class="px-4  py-2 bg-violet-500 text-white rounded-md">View All users</a>
@@ -21,26 +25,20 @@
         </div>
 
         <div class="px-10 py-4">
-            {{#if tasks.length}}
+            {{#if user.length}}
                 <table class="table-auto w-full bg-white rounded-md">
                     <thead>
                         <tr class="bg-gray-700 text-white">
-                            <th class="px-4 py-2">Task ID</th>
-                            <th class="px-4 py-2">User Name</th>
-                            <th class="px-4 py-2">Email</th>
-                            <th class="px-4 py-2">Mobile No</th>
+                            <th class="px-4 py-2">Task Id</th>
                             <th class="px-4 py-2">Task Name</th>
                             <th class="px-4 py-2">Task Status</th>
                             <th class="px-4 py-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each tasks}}
+                        {{#each user}}
                             <tr class="bg-gray-100">
                                 <td class="border px-4 py-2 text-center">{{this.id}}</td>
-                                <td class="border px-4 py-2 text-center">{{this.user.name}}</td>
-                                <td class="border px-4 py-2 text-center">{{this.user.email}}</td>
-                                <td class="border px-4 py-2 text-center">{{this.user.mobile}}</td>
                                 <td class="border px-4 py-2 text-center">{{this.task_name}}</td>
                                 <td class="border px-4 py-2 text-center
                                  {{#if (eq this.task_type 'Pending')}}text-red-500{{else}}text-green-600{{/if}}">
@@ -49,8 +47,6 @@
                                 <td class="border py-2">
                                     <div class="flex justify-center">
                                         <a href="/task/edit/{{this.id}}" class="text-blue-500 mx-1">Edit Status</a>
-                                        &nbsp;|&nbsp;
-                                        <a href="/task/delete/{{this.id}}" class="text-red-500">Delete Task</a>
                                     </div>
                                 </td>
                             </tr>
@@ -58,7 +54,7 @@
                     </tbody>
                 </table>
             {{else}}
-                <p class="text-white">No tasks found. Please add a new task.</p>
+                <p class="text-white">No task found. to assign a task see All user's page.</p>
             {{/if}}
         </div>
     </div>

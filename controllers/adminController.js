@@ -1,74 +1,74 @@
 const bcrypt = require('bcrypt');
 const Admin = require('../models/Admin');  // Assuming you have an Admin model
-const passport = require('passport');
-const { get } = require('http');
+const passport = require('../config/passport');
 
-
-
+// Render registration page
 const getRegister = (req, res) => {
     res.render('./admin/register');
-}
+};
 
+// Register a new admin
 const register = async (req, res) => {
     const { username, email, password } = req.body;
     
     try {
-        // Check if the admin already exists
+        // Check if admin already exists
         const existingAdmin = await Admin.query().findOne({ email });
         if (existingAdmin) {
-            // If the admin exists, render the registration page with an error message
             return res.render('./admin/register', { message: 'Admin already exists.' });
         }
-        
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create new admin record
-        const newAdmin = await Admin.query().insert({
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password.trim(), 10);
+
+        // Insert new admin
+        await Admin.query().insert({
             username,
             email,
             password: hashedPassword,
         });
 
-        // Render success message with the registration view
-        res.render('./admin/', { message: 'Admin registered successfully!' });
+        req.flash('success', 'Admin registered successfully! Please log in.');
+        res.redirect('/');
     } catch (error) {
         console.error('Error registering admin:', error);
         res.render('./admin/register', { message: 'Error registering admin.' });
     }
 };
 
+// Render login page with flash messages
 const getLogin = (req, res) => {
-    res.render('./admin/index', {});
-}
+    res.render('./admin/index', { message: req.flash('error') });
+};
 
-const login = (req, res) => {
-    if (req.isAuthenticated()) {
-        // If the user is authenticated, redirect to the admin dashboard or home page
-        // return res.redirect('./');
-        alert("Logged in successfully!");
-    } else {
-        // Render the login view if not authenticated
-        // res.render('./', { message: 'Please log in.' });
-        alert("problem logging")
-    }
+// Handle admin login with passport
+const login = (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) return next(err);
+        if (!user) return res.render('./admin/index', { message: info.message });
+
+        req.login(user, (err) => {
+            if (err) return next(err);
+            return res.redirect('/dashboard');
+        });
+    })(req, res, next);
 };
 
 // Admin logout
 const logout = (req, res) => {
     req.logout((err) => {
         if (err) {
-            // Render an error message if there's an issue logging out
             return res.render('./admin/index', { message: 'Error logging out.' });
         }
-        // Render the login page with a success message after logging out
-        res.render('./admin/index', { message: 'Admin logged out successfully!' });
+        req.flash('success', 'Admin logged out successfully!');
+        res.redirect('/');
     });
 };
 
+// Render admin dashboard
 const dashboard = (req, res) => {
-    res.render('./admin/dashboard', { message: 'Dashboard' });
-}
+    res.render('./admin/dashboard', { user: req.user });
+};
 
 module.exports = {
     dashboard,

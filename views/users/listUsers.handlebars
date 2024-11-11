@@ -1,19 +1,19 @@
-<header class="w-100 h-[10vh] bg-zinc-700">
-    <div class="flex justify-between items-center px-2">
-        <div class="w-[5%] flex flex-col justify-center items-center px-2">
-            <a href="/dashboard"><img src="https://img.icons8.com/?size=65&id=112355&format=png&color=ffffff" alt=""></a>
-            <h1 class="ml-[35%] text-white w-[140%]">User's-Task</h1>
-        </div>
-        <div class="absolute right-0 w-[10%] flex justify-center items-center p-2">
-            <a class="text-white font-bold border bg-red-500 rounded-lg px-4 py-2 hover:bg-white hover:text-black transition" href="/logout">Logout</a>
-        </div>
-    </div>
-</header>
+{{> header}}
+
 
 <div class="w-100">
     <div class='w-full h-[90vh] bg-zinc-800'>
         <div class="flex flex-col justify-between px-10 py-4">
+
+            
+
             <h1 class="text-center text-3xl text-white">All Users</h1>
+            <a href="/dashboard" 
+                onclick="window.history.back()" 
+                class="text-white w-[3.8%] font-bold border border-white rounded-lg px-4 py-2 mb-3 hover:scale-110 hover:text-black transition transform"
+            >
+                <img class="w-6 h-6" src="https://img.icons8.com/?size=100&id=26194&format=png&color=ffffff" alt="Back">
+            </a>
             <div class="flex justify-between" > 
                 <a href="/user/addUser" class='px-4 py-2 bg-green-500 text-white rounded-md'>Add User</a>
                 <a href="/task/alltasks" class='px-4 py-2 bg-blue-500 text-white rounded-md'>View Assigned Tasks</a>
@@ -42,6 +42,8 @@
                                 <td class='border py-2'>
                                     <div class='flex justify-center'>
                                         <a href="/user/assignTask/{{this.id}}" class="text-green-500 mx-1">Assign Task</a>
+                                        &nbsp;|&nbsp;
+                                        <a href="/user/allTasksOfAUser/{{this.id}}" class="text-violet-500 mx-1">Get all Tasks</a>
                                         &nbsp;|&nbsp;
                                         <a href="/user/edit/{{this.id}}" class="text-blue-500 mx-1">Edit User</a>
                                         &nbsp;|&nbsp;

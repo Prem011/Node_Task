@@ -2,7 +2,7 @@ const { Model } = require('objection');
 
 class Task extends Model {
     static get tableName() {
-        return 'task'; // Ensure this is the actual table name
+        return 'task'; // Ensure this is the correct table name for tasks
     }
 
     static get relationMappings() {
@@ -10,11 +10,11 @@ class Task extends Model {
 
         return {
             user: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: User,
+                relation: Model.BelongsToOneRelation, // A task belongs to one user
+                modelClass: User, // Link to the User model
                 join: {
-                    from: 'task.user_id',  // Changed 'tasks' to 'task'
-                    to: 'user.id'         // Assuming 'users' is the correct table name
+                    from: 'task.user_id', // Foreign key in tasks table
+                    to: 'user.id'         // Primary key in users table
                 }
             }
         };
@@ -23,13 +23,13 @@ class Task extends Model {
     static get jsonSchema() {
         return {
             type: 'object',
-            required: ['task_name', 'task_type', 'user_id'],  
+            required: ['task_name', 'task_type', 'user_id'],  // 'user_id' is required to link the task to a user
 
             properties: {
                 id: { type: 'integer' },
-                task_name: { type: 'string', minLength: 1 },  
-                task_type: { type: 'string', enum: ['Pending', 'Done'] }, 
-                user_id: { type: 'integer' },  
+                task_name: { type: 'string', minLength: 1 },  // The task's name (e.g., "Fix bugs")
+                task_type: { type: 'string', enum: ['Pending', 'Done'] },  // Status of the task
+                user_id: { type: 'integer' },  // Foreign key linking task to user
             }
         };
     }

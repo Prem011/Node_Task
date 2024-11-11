@@ -11,11 +11,9 @@ const app = express();
 const session = require('express-session');
 const passport = require('passport');
 require('./config/passport');
-const Handlebars = require('handlebars');
+const flash = require('connect-flash');
 
-// db
 const db = require('./config/db.js');
-
 
 dotenv.config();
 app.use(express.json());
@@ -29,44 +27,44 @@ app.use(
     })
 );
 
-// Register the custom helper
-Handlebars.registerHelper('ifEquals', function(a, b, options) {
-    if (a == b) {
-        return options.fn(this);
-    }
-    return options.inverse(this);
-});
-
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(flash());
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Register helpers within the exphbs configuration
 const hbs = exphbs.create({
+    defaultLayout: 'main',
+    layoutsDir: path.join(__dirname, 'views', 'layouts'),
+    partialsDir: path.join(__dirname, "views/partials"),
     helpers: {
         join: function (array, separator) {
             return array.join(separator);
+        },
+        eq: function (a, b) {
+            console.log("Comparing:", a, b); // Logs the values being compared
+            return String(a) === String(b);  // Ensures both are strings
+        },
+        // Define the ifEquals helper
+        ifEquals: function (a, b, options) {
+            if (a === b) {
+                return options.fn(this);  // Run the block of code inside {{#ifEquals}} ... {{/ifEquals}}
+            }
+            return options.inverse(this);  // Run the block of code inside {{else}} if not equal
         }
     }
 });
 
-
-app.engine(
-    'handlebars',
-    exphbs.engine({
-        defaultLayout: 'main',
-        layoutsDir: path.join(__dirname, 'views', 'layouts'),
-        partialsDir: path.join(__dirname, "views/partials") 
-    })
-);
+// Set Handlebars as the view engine
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
+// Define routes
 app.use('/', adminRoutes);
 app.use('/task', taskRoutes);
 app.use('/user', userRoutes);
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

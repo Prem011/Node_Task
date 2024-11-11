@@ -25,7 +25,7 @@ const getAllUsers = async (req, res) => {
     try {
         const users = await User.query();
 
-        res.render('./users/listUsers', { users: users });
+        res.render('./users/listUsers', { users: users, user: req.user  });
     } catch (err) {
         console.error("Error fetching users:", err.message);
     }
@@ -101,7 +101,7 @@ const getassignTasktoUser = async(req, res) => {
     const userId = req.params.id;
 
     const user_name = await User.query().findById(userId).select('name')
-    console.log(user_name);
+    // console.log(user_name);
     const users = await User.query().whereNot({ id: userId });
     res.render('./users/assignTasktoUser', { users, userId, user_name });
 }
@@ -120,13 +120,66 @@ const assignTasktoUser = async(req, res, next) => {
 
     Task.query().insert(taskData).then(() => res.redirect("/user/listUsers"))
     .catch((err)=>{
-        console.error("Error adding task to user:", err.message);
-        res.status(500).send("Error adding task to user");
+        console.error("Error assigning task to user:", err.message);
+        res.status(500).send("Error assigning task to user");
     })
 
 }
 
+const getallTasksOfAUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        // Find the user by their ID
+        const user = await User.query().findById(userId);
+
+        // Retrieve the tasks associated with this user using withGraphFetched
+        const userWithTasks = await User.query()
+            .findById(userId)
+            .withGraphFetched('tasks');
+
+        // Check if the user has tasks
+        if (!userWithTasks.tasks || userWithTasks.tasks.length === 0) {
+            return res.status(404).json({ message: 'No tasks found for this user.' });
+        }
+
+        // Count the number of pending tasks
+        const pendingTasksCount = await User.query()
+            .findById(userId)
+            .withGraphFetched('tasks')
+            .modifyGraph('tasks', (builder) => builder.where('task_type', 'Pending'))
+            .then((user) => user.tasks.length);
+
+        // Count the number of done tasks
+        const doneTasksCount = await User.query()
+            .findById(userId)
+            .withGraphFetched('tasks')
+            .modifyGraph('tasks', (builder) => builder.where('task_type', 'Done'))
+            .then((user) => user.tasks.length);
+
+        // Log the counts (optional)
+        // console.log(user.name);
+
+        // Return the tasks and user data to the view, along with counts
+        res.render('./users/getAllTasksofUser', {
+            user: userWithTasks.tasks,
+            pendingCount: pendingTasksCount,
+            doneCount: doneTasksCount,
+            username : user.name
+        });
+
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+        return res.status(500).json({ message: 'An error occurred while retrieving tasks.' });
+    }
+};
+
+
+
+
+
 module.exports = {
+    getallTasksOfAUser,
     getassignTasktoUser,
     assignTasktoUser,
     deleteUser,

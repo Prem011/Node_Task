@@ -2,26 +2,19 @@ const { Model } = require('objection');
 
 class User extends Model {
     static get tableName() {
-        return 'user';
+        return 'user'; // Ensure this is the correct table name for users
     }
 
     static get relationMappings() {
-        const Task = require('./Task');
+        const Task = require('./Task'); // Adjust path if necessary
 
         return {
             tasks: {
-                // relation: Model.HasManyRelation, //`HasOneRelation` if each user has a single task
-                relation: Model.BelongsToOneRelation,
-                modelClass: Task,
-                
-                // join: {
-                //     from: 'users.id',                  // The primary key in the 'users' table
-                //     to: 'tasks.user_id'                // The foreign key in the 'tasks' table
-                // }
-
+                relation: Model.HasManyRelation, // A user has many tasks
+                modelClass: Task, // Link to the Task model
                 join: {
-                    from: 'users.task_id',
-                    to: 'tasks.id'
+                    from: 'user.id',  // Primary key in the 'user' table
+                    to: 'task.user_id' // Foreign key in the 'task' table that points to 'user.id'
                 }
             }
         };
@@ -30,14 +23,13 @@ class User extends Model {
     static get jsonSchema() {
         return {
             type: 'object',
-            required: ['name', 'email', 'mobile'], 
+            required: ['name', 'email', 'mobile'],  // Required fields for creating a user
 
             properties: {
-                id: { type: 'integer' },
+                id: { type: 'integer' }, // Primary key
                 name: { type: 'string' },
                 email: { type: 'string', format: 'email' },
-                mobile: { type: 'string', minLength: 10, maxLength: 15 }
-                
+                mobile: { type: 'string', minLength: 10, maxLength: 15 },
             }
         };
     }
@@ -46,15 +38,13 @@ class User extends Model {
         const userWithEmail = await User.query().findOne({ email });
         if (userWithEmail) {
             throw new Error('Email already exists');
-    }
-    
-    const userWithMobile = await User.query().findOne({ mobile });
-    if (userWithMobile) {
-        throw new Error('Mobile number already exists');
-    }
-    
-}
+        }
 
+        const userWithMobile = await User.query().findOne({ mobile });
+        if (userWithMobile) {
+            throw new Error('Mobile number already exists');
+        }
+    }
 }
 
 module.exports = User;

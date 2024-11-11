@@ -20,34 +20,6 @@ class Admin extends Model {
     };
   }
 
-  async $beforeInsert(context) {
-    await super.$beforeInsert(context);
-    if (this.password) {
-      this.password = await bcrypt.hash(this.password, 10);  
-    }
-  }
-
-  async $beforeUpdate(opt, context) {
-    await super.$beforeUpdate(opt, context);
-    if (this.password) {
-      this.password = await bcrypt.hash(this.password, 10);  
-    }
-  }
-
-  // async validatePassword(plainPassword) {
-  //   return bcrypt.compare(plainPassword, this.password);  
-  // }
-
-  async validatePassword(plainPassword) {
-    console.log('Comparing passwords:');
-    console.log('Entered Password:', plainPassword);
-    console.log('Stored Hashed Password:', this.password);
-    const decoded = await bcrypt.compare(plainPassword, this.password);
-    console.log('Decoded Password:', decoded);
-    return decoded;
-  }
-  
-
 }
 
 module.exports = Admin;

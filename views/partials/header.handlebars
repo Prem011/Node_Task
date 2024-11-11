@@ -1,0 +1,34 @@
+<header class="w-full h-[10vh] bg-zinc-700">
+    <div class="flex justify-between items-center px-2">
+        <div class="flex flex-col justify-center items-center px-2 w-20">
+            <a href="/dashboard">
+                <img src="https://img.icons8.com/?size=65&id=112355&format=png&color=ffffff" alt="">
+            </a>
+            <h1 class="ml-2 w-[20vw] text-white text-center">User's-Task</h1>
+        </div>
+
+        <div class="absolute right-0 w-[10%] flex gap-2 justify-center items-center p-2 mr-[2%]">
+            {{#if user }}
+                <a
+                    class="text-white font-bold border bg-red-500 rounded-lg px-4 py-2 hover:bg-red-700 hover:text-black transition"
+                    href="/logout"
+                >
+                    Logout
+                </a>
+            {{else}}
+                <a
+                    class="text-white font-bold border border-white rounded-lg px-4 py-2 hover:bg-white hover:text-black transition"
+                    href="/register"
+                >
+                    Register
+                </a>
+                <a
+                    class="text-white font-bold border border-white rounded-lg px-4 py-2 hover:bg-white hover:text-black transition"
+                    href="/"
+                >
+                    Login
+                </a>
+            {{/if}}
+        </div>
+    </div>
+</header>
